@@ -2,7 +2,7 @@
 Script: Slack Empty Channels Alert
 
 Description:
-This script identifies Slack channels within a specified team that are empty (i.e., have no members) and posts an alert to a designated Slack channel. The script handles rate limits by implementing exponential backoff and retries. 
+This script identifies Slack channels within a specified team that are empty (i.e., have no members) and posts an alert to a designated Slack channel. The script handles rate limits by implementing exponential backoff and retries.
 
 Functions:
 - fetch_channels: Retrieves a list of Slack channels from the Slack API, handling pagination with cursors.
@@ -10,27 +10,28 @@ Functions:
 - main: Main function to execute the script. It fetches channels, identifies empty ones, and posts an alert if any empty channels are found.
 
 Usage:
-1. Replace placeholder values for `SLACK_TOKEN`, `TEAM_ID`, and `ALERT_CHANNEL` with actual values.
+1. Store the `SLACK_TOKEN`, `TEAM_ID`, and `ALERT_CHANNEL` as environment variables.
 2. Run the script.
-3. The script will continuously fetch channels, identify empty ones, and send a notification to the specified Slack channel.
+3. The script will fetch channels, identify empty ones, and send a notification to the specified Slack channel.
 
 Notes:
 - Ensure the Slack token has the necessary permissions to access channel information and post messages.
 - The script handles rate limiting by retrying with exponential backoff, capping the delay at 10 minutes.
 - The `fetch_channels` function uses pagination to handle large numbers of channels.
+- This script can be automated using GitHub Actions, with environment variables managed through GitHub Secrets for sensitive data (e.g., `SLACK_TOKEN`).
 
 Author: Chad Ramey
-Date: August 14, 2024
+Date: August 27, 2024
 """
 
 import os
 import time
 import requests
 
-# Replace with your actual Slack token, team ID, and alert channel ID
-SLACK_TOKEN = ''  # Slack token (ensure it has the right permissions)
-TEAM_ID = ''  # Your Slack team ID
-ALERT_CHANNEL = ''  # Channel ID where alerts should be posted
+# Fetch values from environment variables
+SLACK_TOKEN = os.getenv('SLACK_TOKEN')  # Slack token
+TEAM_ID = os.getenv('TEAM_ID')  # Your Slack team ID
+ALERT_CHANNEL = os.getenv('ALERT_CHANNEL')  # Channel ID where alerts should be posted
 
 def fetch_channels(cursor=None):
     """
@@ -94,6 +95,7 @@ def main():
     Main function to execute the script. It fetches channels, identifies empty ones,
     and posts an alert if any empty channels are found.
     """
+    print("Starting Slack Empty Channels Alert script...")
     cursor = None
     empty_channels = []
     retry_count = 0
@@ -106,6 +108,7 @@ def main():
             retry_count += 1
             if retry_count > max_retries:
                 print("Max retries reached. Exiting.")
+                post_to_slack("Max retries reached. Unable to complete the Slack Empty Channels Alert script.")
                 break
 
             retry_after = int(headers.get('Retry-After', initial_delay))  # Delay before retrying
@@ -115,10 +118,12 @@ def main():
             continue
 
         if not response.get('ok'):
+            print("Error fetching channels, exiting...")
             break
 
         retry_count = 0  # Reset retry count after a successful request
         channels = response.get('channels', [])
+        print(f"Fetched {len(channels)} channels.")
         for channel in channels:
             if channel.get('num_members') == 0:
                 empty_channels.append(f"Channel: {channel['name']} (ID: {channel['id']})")
@@ -130,6 +135,9 @@ def main():
     if empty_channels:
         message = "Empty Slack Channels:\n" + "\n".join(empty_channels)
         post_to_slack(message)
+        print(f"Posted alert for {len(empty_channels)} empty channels.")
+    else:
+        print("No empty channels found.")
 
 if __name__ == "__main__":
     main()
