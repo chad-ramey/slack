@@ -50,24 +50,12 @@ def fetch_channels(cursor=None):
     Fetches a list of Slack channels from the Slack API.
 
     Args:
-        cursor (str,
+        cursor (str, optional): The cursor for pagination, if available.
 
-
-import os
-import time
-import requests
-import csv
-from datetime import datetime, timedelta
-
-# Fetch values from environment variables
-SLACK_TOKEN = os.getenv('SLACK_TOKEN')  # Slack token
-TEAM_ID = os.getenv('TEAM_ID')  # Your Slack team ID
-ALERT_CHANNEL = os.getenv('ALERT_CHANNEL')  # Channel ID where alerts should be posted
-CSV_FILENAME = "inactive_slack_channels.csv"  # Output CSV filename
-
-def fetch_channels(cursor=None):
-    """
-    Fetches a list of Slack channels from the Slack API.
+    Returns:
+        tuple: A tuple containing:
+            - data (dict): The response JSON data from Slack API.
+            - response.headers (dict): The response headers from the Slack API.
     """
     url = "https://slack.com/api/conversations.list"
     headers = {
@@ -92,6 +80,12 @@ def fetch_channels(cursor=None):
 def fetch_last_message_timestamp(channel_id):
     """
     Fetches the timestamp of the most recent message in a channel.
+
+    Args:
+        channel_id (str): The ID of the channel.
+
+    Returns:
+        str: The timestamp of the most recent message, or None if no messages found.
     """
     url = "https://slack.com/api/conversations.history"
     headers = {
@@ -117,6 +111,12 @@ def fetch_last_message_timestamp(channel_id):
 def convert_timestamp_to_datetime(ts):
     """
     Converts a Slack timestamp to a human-readable datetime format.
+    
+    Args:
+        ts (str): The Slack timestamp.
+
+    Returns:
+        str: The converted datetime string.
     """
     if ts:
         return datetime.utcfromtimestamp(float(ts)).strftime('%Y-%m-%d %H:%M:%S')
@@ -125,6 +125,9 @@ def convert_timestamp_to_datetime(ts):
 def write_to_csv(channels):
     """
     Writes the inactive channels to a CSV file.
+
+    Args:
+        channels (list): List of dictionaries containing channel details.
     """
     with open(CSV_FILENAME, mode='w', newline='') as file:
         writer = csv.writer(file)
