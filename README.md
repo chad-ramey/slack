@@ -3,7 +3,6 @@
 This repository contains a collection of Python scripts and JavaScript files designed to automate various processes and tasks in Slack, including managing channels, users, user groups, and Slack workflows.
 
 ## Table of Contents
-  - [Table of Contents](#table-of-contents)
   - [Scripts Overview](#scripts-overview)
   - [Requirements](#requirements)
   - [Installation](#installation)
