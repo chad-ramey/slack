@@ -2,37 +2,36 @@
 Script: Slack Update User Profile for Out of Office/Vacation with Do Not Disturb (DND) Mode
 
 Description:
-This script updates a user's Slack profile to reflect their out-of-office or vacation status. 
-It sets the user's display name, status text, status emoji, and status expiration. Additionally, 
-the script activates Slack's Do Not Disturb (DND) mode to pause notifications for a specified 
-duration.
+This script updates a user's Slack profile and activates Do Not Disturb (DND) mode. It can set
+display names, status text, status emoji, and status expiration for the user associated with
+the provided Slack token or another user, depending on the token's permissions.
 
-Functions:
-- get_slack_token: Reads the Slack token from a specified file.
-- set_profile: Updates the user's Slack profile with the provided display name, status text, 
-  status emoji, and status expiration.
-- set_snooze: Pauses notifications for the specified number of minutes using Slack's 
-  Do Not Disturb (DND) feature.
+Important Notes:
+- The ability to update another user's profile and snooze their notifications depends on the
+  permissions associated with the provided Slack token.
+- Admin-level tokens or tokens with elevated permissions may allow modifying profiles and
+  statuses for other users.
+- This behavior may vary based on the workspace or token configuration (e.g., Enterprise Grid
+  admin tokens).
 
-Usage:
-1. Run the script.
-2. Enter the path to your Slack access token file when prompted.
-3. Enter the user ID, display name, status text, status emoji, status expiration, and 
-   snooze duration (in minutes).
-4. The script will update the user's profile and pause their notifications for the 
-   specified time.
+Required Scopes:
+- `users.profile:write` to update user profile details (e.g., display name, status).
+- `dnd:write` to manage Do Not Disturb (DND) settings.
 
-Notes:
-- Ensure that the Slack token has the necessary permissions to update user profiles 
-  and manage Do Not Disturb settings.
-- Handle the Slack token securely and do not expose it in the code.
-- Customize the input prompts and error handling as needed for your organization.
-- This script includes both profile updates and snoozing notifications in Slack.
+Use Cases:
+- Admins can set Out of Office statuses for users in their workspace.
+- Users can update their own statuses and snooze notifications.
+
+Limitations:
+- If the token lacks the required permissions, the script will only update the profile of the
+  authenticated user associated with the token.
+- Ensure tokens are handled securely and not exposed publicly.
 
 Author: Chad Ramey
 Date: August 2, 2024
-Last Updated: October 1, 2024 (Added DND/Notification Snooze functionality)
+Last Updated: December 6, 2024 (Reflects capability to update another user's profile and status)
 """
+
 
 import requests
 
