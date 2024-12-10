@@ -52,6 +52,7 @@ Here’s a list of all the scripts in this repository along with their descripti
 37. **[slackSDK_restrict_approve.py](slackSDK_restrict_approve.py)**: Restricts or approves Slack apps using the Slack SDK.
 38. **[slackSDK_revoke.py](slackSDK_revoke.py)**: Revokes Slack apps and integrations using the Slack SDK.
 39. **[slack_export_channel_conversations.py](slack_export_channel_conversations.py)**: This script exports all messages from a specified Slack channel to a JSON file.
+40. **[slack_emoji_usage.py](slack_export_channel_conversations.py)**: The script reads a list of channel IDs from an external CSV file and generates a report of emoji usage.
 
 ## Requirements
 - **Python 3.x**: Ensure that Python 3 is installed on your system.
