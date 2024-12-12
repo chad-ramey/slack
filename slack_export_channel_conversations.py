@@ -3,15 +3,17 @@ Script: Slack Export Channel Conversations (Including Threads)
 
 Description:
 This script exports all messages from a specified Slack channel to a JSON file, including threaded replies to parent messages. 
-Users can specify a date range to filter messages or choose to export all messages in the channel.
+Users can specify a date range to filter messages or choose to export all messages in the channel. Additionally, users have the option to generate a cleaned-up CSV version of the JSON file.
 
 Usage:
 1. Install the Slack SDK using 'pip install slack_sdk'.
-2. Run the script.
-3. Enter the path to your Slack token file when prompted.
-4. Provide the channel ID for the channel whose conversations you want to export.
-5. Specify a date range (e.g., '14' for messages from the last 14 days) or 'all' to export all messages.
-6. The script will save the exported messages, including threads, to a JSON file in the current directory.
+2. Install pandas using 'pip install pandas' if CSV export is desired.
+3. Run the script.
+4. Enter the path to your Slack token file when prompted.
+5. Provide the channel ID for the channel whose conversations you want to export.
+6. Specify a date range (e.g., '14' for messages from the last 14 days) or 'all' to export all messages.
+7. Choose whether to generate a cleaned-up CSV version of the exported JSON file.
+8. The script will save the exported messages, including threads, to a JSON file and optionally to a CSV file.
 
 Notes:
 - Ensure the Slack token has the necessary permissions to fetch channel history 
@@ -26,6 +28,7 @@ Date: December 12, 2024
 import json
 import time
 from datetime import datetime, timedelta
+import pandas as pd
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
@@ -117,6 +120,26 @@ def save_messages_to_file(messages, filename="channel_messages_with_threads.json
         print(f"An error occurred while saving the file: {e}")
         exit(1)
 
+def save_messages_to_csv(messages, filename="channel_messages.csv"):
+    """Converts JSON message data to a CSV file."""
+    try:
+        cleaned_messages = []
+        for entry in messages:
+            cleaned_messages.append({
+                "Timestamp": datetime.fromtimestamp(float(entry['ts'])).strftime('%Y-%m-%d %H:%M:%S'),
+                "User": entry.get('user', 'Bot'),
+                "Text": entry.get('text', ''),
+                "Title": entry['attachments'][0].get('title') if 'attachments' in entry and entry['attachments'] else '',
+                "Link": entry['attachments'][0].get('title_link') if 'attachments' in entry and entry['attachments'] else '',
+            })
+
+        df = pd.DataFrame(cleaned_messages)
+        df.to_csv(filename, index=False)
+        print(f"Messages saved to {filename}")
+    except Exception as e:
+        print(f"An error occurred while saving the CSV file: {e}")
+        exit(1)
+
 def main():
     """Main function to prompt the user and export Slack messages."""
     print("Welcome to the Slack Channel Export Script (Including Threads)")
@@ -158,6 +181,11 @@ def main():
 
     # Save messages to a JSON file
     save_messages_to_file(messages)
+
+    # Prompt the user to generate a CSV file
+    generate_csv = input("Would you like to generate a CSV file from the JSON data? (yes/no): ").strip().lower()
+    if generate_csv == 'yes':
+        save_messages_to_csv(messages)
 
 if __name__ == "__main__":
     main()
