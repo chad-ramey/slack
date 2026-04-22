@@ -53,6 +53,7 @@ Here’s a list of all the scripts in this repository along with their descripti
 38. **[slackSDK_revoke.py](slackSDK_revoke.py)**: Revokes Slack apps and integrations using the Slack SDK.
 39. **[slack_export_channel_conversations.py](slack_export_channel_conversations.py)**: This script exports all messages from a specified Slack channel to a JSON file.
 40. **[slack_emoji_usage.py](slack_export_channel_conversations.py)**: The script reads a list of channel IDs from an external CSV file and generates a report of emoji usage.
+41. **[reinvite_user_to_channels.py](reinvite_user_to_channels.py)**: The script add an account back to channels: public, private, and connect.
 
 ## Requirements
 - **Python 3.x**: Ensure that Python 3 is installed on your system.
