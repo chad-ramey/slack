@@ -40,16 +40,16 @@ CSV Format Guidelines:
 
 2. Delete Channel:
    channel_id
-   C07EJNJ2CLX
+   C0XXXXXXXXX
 
 3. Archive/Unarchive Channel:
    channel_id
-   C07EJNJ2CLX
+   C0XXXXXXXXX
 
 4. Update Channel Visibility:
    channel_id,visibility
-   C07EJNJ2CLX,private
-   C07EJNJ2CMX,public
+   C0XXXXXXXXX,private
+   C0XXXXXXXXY,public
 
 Author: Chad Ramey
 Last Updated: May 9, 2025
