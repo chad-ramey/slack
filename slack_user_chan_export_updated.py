@@ -111,8 +111,7 @@ def main():
     """Main function to fetch and export channel data."""
     token_path = input("Please enter the path to your Slack token file: ")
     token = get_slack_token(token_path)
-    team_id = input("Please enter the team ID (default T03NUH11G): ")
-    team_id = team_id or 'T03NUH11G'
+    team_id = input("Please enter the team ID (e.g. T0XXXXXXXXX): ").strip()
 
     mode = input("Select mode (1: single user, 2: multiple users, 3: CSV file): ")
 

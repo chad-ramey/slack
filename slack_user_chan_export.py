@@ -54,7 +54,7 @@ def main():
         token = token_file.read().strip()
 
     user_id = input("Please enter the user ID: ")
-    team_id = input("Please enter the team ID (T03NUH11G): ")
+    team_id = input("Please enter the team ID (e.g. T0XXXXXXXXX): ")
 
     client = WebClient(token=token)
 

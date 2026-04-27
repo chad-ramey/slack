@@ -100,7 +100,7 @@ function notifySlackAboutGuestsWithoutExpiration() {
         }
 
         if (user.email && user.email.endsWith("@domain.com")) {
-          Logger.log('Skipping user (OnePeloton email): ' + user.id);
+          Logger.log('Skipping user (internal domain email): ' + user.id);
           return;
         }
 

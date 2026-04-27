@@ -78,7 +78,7 @@ def main():
         slack_token = token_file.read().strip()
 
     client = WebClient(token=slack_token)
-    team_id = "T03NUH11G"  # Constant team ID
+    team_id = input("Please enter your Slack team ID (e.g. T0XXXXXXXXX): ").strip()
 
     action = input("Do you want to 'enable' or 'disable' user groups? ").strip().lower()
     if action not in ('enable', 'disable'):

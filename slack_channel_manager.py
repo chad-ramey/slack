@@ -73,19 +73,18 @@ def get_slack_token():
     return token
 
 def select_workspace():
+    """Prompt for a Slack team ID. Add your workspace IDs to the dict below."""
     print("\nPlease select your workspace:")
     workspaces = {
-        "1": "T01BTC4E5V3 (Global Direct Sales)",
-        "2": "T03NUH11G (OnePeloton)",
-        "3": "T022J48BJM7 (Peloton Enterprise Operations Support)",
-        "4": "T01BWESMJ1G (Peloton Field Ops Team)",
-        "5": "T05SZDG3KHB (Member Support Partners)",
-        "6": "T01C8P34LQM (ICEbox)"
+        "1": "T_WORKSPACE_1 (Workspace One)",
+        "2": "T_WORKSPACE_2 (Workspace Two)",
     }
     for key, value in workspaces.items():
         print(f"{key}. {value}")
-    choice = input("Select a workspace number: ")
-    return workspaces.get(choice, None).split()[0] if choice in workspaces else None
+    choice = input("Select a workspace number (or enter a team ID directly): ")
+    if choice in workspaces:
+        return workspaces[choice].split()[0]
+    return choice.strip() or None
 
 client = WebClient(token=get_slack_token())
 

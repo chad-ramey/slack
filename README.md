@@ -46,13 +46,13 @@ Here’s a list of all the scripts in this repository along with their descripti
 31. **[slack_user_byID.py](slack_user_byID.py)**: Retrieves Slack user information by their user ID.
 32. **[slack_user_chan_export_updated.py](slack_user_chan_export_updated.py)**: Exports updated user data from Slack channels.
 33. **[slack_user_chan_export.py](slack_user_chan_export.py)**: Exports users from Slack channels.
-34. **[slack_user_mcg_udpate.py](slack_user_mcg_udpate.py)**: Updates multi-channel guest users in Slack.
+34. **[slack_user_mcg_update.py](slack_user_mcg_update.py)**: Updates multi-channel guest users in Slack.
 35. **[slack_usergroups_list.py](slack_usergroups_list.py)**: Lists all user groups in a Slack workspace.
 36. **[slack_workflows_search.py](slack_workflows_search.py)**: Searches and retrieves data related to Slack workflows.
 37. **[slackSDK_restrict_approve.py](slackSDK_restrict_approve.py)**: Restricts or approves Slack apps using the Slack SDK.
 38. **[slackSDK_revoke.py](slackSDK_revoke.py)**: Revokes Slack apps and integrations using the Slack SDK.
 39. **[slack_export_channel_conversations.py](slack_export_channel_conversations.py)**: This script exports all messages from a specified Slack channel to a JSON file.
-40. **[slack_emoji_usage.py](slack_export_channel_conversations.py)**: The script reads a list of channel IDs from an external CSV file and generates a report of emoji usage.
+40. **[slack_emoji_usage.py](slack_emoji_usage.py)**: The script reads a list of channel IDs from an external CSV file and generates a report of emoji usage.
 41. **[reinvite_user_to_channels.py](reinvite_user_to_channels.py)**: The script add an account back to channels: public, private, and connect.
 
 ## Requirements
@@ -63,7 +63,7 @@ Here’s a list of all the scripts in this repository along with their descripti
 ## Installation
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo-name/slack-automation-scripts.git
+   git clone https://github.com/chad-ramey/slack.git
    ```
 2. Install the required dependencies:
    ```bash

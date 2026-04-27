@@ -52,6 +52,8 @@ def main():
     with open(token_path, 'r') as token_file:
         slack_token = token_file.read().strip()
 
+    team_id = input("Please enter your Slack team ID (e.g. T0XXXXXXXXX): ").strip()
+
     # Ask the user if they want to include users, count, and disabled groups
     include_users = ask_yes_no("Do you want to include users?")
     include_count = ask_yes_no("Do you want to include the count of groups?")
@@ -66,7 +68,7 @@ def main():
             include_users=include_users,
             include_count=include_count,
             include_disabled=include_disabled,
-            team_id='T03NUH11G'  # Make sure to adjust or parameterize this if needed
+            team_id=team_id  # Pass team_id from main() input
         )
 
         # Check if the response is successful
